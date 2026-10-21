@@ -1,4 +1,9 @@
+//app/[slug]/page.tsx
 "use client";
+
+// Forzar a Next.js a no intentar pre-renderizar estáticamente está págins durante el build
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 import { useState, useEffect, use } from "react";
 import { supabase } from "../../lib/supabase";
