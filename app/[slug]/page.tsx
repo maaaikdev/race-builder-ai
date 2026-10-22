@@ -5,7 +5,7 @@ import { useState, useEffect, use, Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { HeroSection } from "@/components/HeroSection";
 import { DistanceCard } from "@/components/DistanceCard";
-import RegistrationFlow from "@/components/RegistrationFlow";
+import {RegistrationFlow} from "@/components/RegistrationFlow";
 import { RaceSiteSpec, DistanceSchema } from "@/specs/schema.spec";
 import { z } from "zod";
 
