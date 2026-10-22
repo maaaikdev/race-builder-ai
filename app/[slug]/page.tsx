@@ -1,21 +1,17 @@
-//app/[slug]/page.tsx
+// app/[slug]/page.tsx
 "use client";
 
-import { useState, useEffect, use } from "react";
-import { supabase } from "../../lib/supabase";
-import { HeroSection } from "../../components/HeroSection";
-import { DistanceCard } from "../../components/DistanceCard";
-import { RegistrationFlow } from "../../components/RegistrationFlow";
-import { RaceSiteSpec, DistanceSchema } from "../../specs/schema.spec";
+import { useState, useEffect, use, Suspense } from "react";
+import { supabase } from "@/lib/supabase";
+import { HeroSection } from "@/components/HeroSection";
+import { DistanceCard } from "@/components/DistanceCard";
+import RegistrationFlow from "@/components/RegistrationFlow";
+import { RaceSiteSpec, DistanceSchema } from "@/specs/schema.spec";
 import { z } from "zod";
 
 type Distance = z.infer<typeof DistanceSchema>;
 
-export default function RaceLandingPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+function RaceContent({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
   const [raceData, setRaceData] = useState<RaceSiteSpec | null>(null);
   const [loading, setLoading] = useState(true);
@@ -103,5 +99,23 @@ export default function RaceLandingPage({
         />
       )}
     </main>
+  );
+}
+
+export default function RaceLandingPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-zinc-400 font-sans">
+          Cargando evento...
+        </div>
+      }
+    >
+      <RaceContent params={params} />
+    </Suspense>
   );
 }
